@@ -4,7 +4,7 @@ This is a basic UI designed form on which when a user enters the data and clicks
 ## How it works:
 The form looks like as given below:
 
-![image](https://user-images.githubusercontent.com/64634235/137717728-33d9fb47-7630-4360-a186-99c1bb9b36fb.png)
+![image](https://user-images.githubusercontent.com/64634235/137718017-97bb58a3-8911-48a4-878a-4de3974f0c7a.png)
 
 whenever the user fills the form and submits it, then a POST request is sent to an API(in JS code) and if the status received by the API is true then Congrats page is displayed else error is displayed.
 
