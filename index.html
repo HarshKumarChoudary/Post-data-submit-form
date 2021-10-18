@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" style="font-weight: bold;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>zypher</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Contact-Form-v2-Modal--Full-with-Google-Map.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="d-flex">
+        <div id="firstdiv" style="text-align: right;color: var(--bs-gray-900);background: var(--bs-white);width: 659.453px;height: 389px;">
+            <p class="text-start" style="font-weight: bold;font-size: 24px;margin-top: 88px;margin-right: 81px;margin-left: 124px;">Schedule an Online Notary Now</p>
+            <form id="contactForm-1" action="javascript:void(0);" method="get" style="margin-left: 104px;margin-top: 42px;">
+                <div class="form-group mb-3"><label class="form-label" for="from-name" style="transform: translate(-324px);margin-left: -40px;margin-right: 162px;color: var(--bs-gray-600);">Full Name</label>
+                    <div class="input-group"><input class="form-control" type="text" id="name" name="name" required="" placeholder="Input Text With Label" style="text-align: left;color: var(--bs-dark);border-top-color: #ffffff;border-right-color: #ffffff;border-bottom-color: rgb(191,193,195);border-left-color: #ffffff;opacity: 0.46;"></div>
+                </div>
+                <div class="form-group mb-3"><label class="form-label" for="from-email" style="transform: translate(-459px);margin-left: -37px;margin-right: 60px;color: var(--bs-gray-600);">Email</label>
+                    <div class="input-group"><input class="form-control" type="text" id="email" name="email" required="" placeholder="Input Text With Label" style="border-top-color: #ffffff;border-right-color: #ffffff;border-left-color: #ffffff;opacity: 0.46;"></div>
+                </div>
+                <div class="form-group mb-3"><label class="form-label" for="from-phone" style="transform: translate(-392px);border-right-color: rgb(33, 37, 41);background: #ffffff;color: var(--bs-gray-600);margin-left: 6px;margin-right: 55px;">Phone Number</label>
+                    <div class="input-group"><input class="form-control" type="text" id="phone" name="phone" required="" placeholder="Input Text With Label" style="border-top-color: #ffffff;border-right-color: #ffffff;border-bottom-color: rgb(206, 212, 218);border-left-color: #ffffff;width: 612px;transform: scale(1);opacity: 0.46;"></div>
+                </div>
+                <div class="d-md-flex align-items-md-center form-group mb-3" style="margin-top: 41px;">
+                    <label class="form-label" for="from-phone" style="border-right-color: rgb(33, 37, 41);background: #ffffff;color: var(--bs-dark);width: 227.1719px;transform: translate(14px);font-size: 20px;letter-spacing: 0px;line-height: 30px;margin-left: -7px;">How Many Notarisations&nbsp;</label>
+                    <select class="form-select" id = "select1" style="margin-left: 88px;width: 158.891px;margin-right: -7px;">
+                        <option value="" selected="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select></div>
+                <div class="d-md-flex align-items-md-center form-group mb-3" style="margin-top: 41px;">
+                    <label class="form-label text-start" for="from-phone" style="border-right-color: rgb(33, 37, 41);background: #ffffff;color: var(--bs-dark);width: 227.1719px;transform: translate(14px);font-size: 20px;letter-spacing: 0px;line-height: 30px;">How Many Signers&nbsp;</label>
+                    <select class="form-select" id="select2" style="margin-left: 80px;width: 158.891px;margin-right: -7px;">
+                        <option value="" selected="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select></div><button id="but" class="btn btn-success link-light" type="submit" style="width: 167.5px;transform: translate(-99px);margin-top: 30px;margin-right: 16px;">Save and Continue</button>
+            </form>
+        </div>
+        <div style="background: url(&quot;assets/img/Untitled.png&quot;) no-repeat, var(--bs-pink);height: 690px;width: 558px;margin-right: -2px;padding-right: 0px;padding-left: 0px;transform: translate(464px);margin-left: -316px;background-size: cover, auto;"></div>
+    </div>
+    <script>
+        var form = document.getElementById("contactForm-1")
+        form.addEventListener('submit',function(e){
+            e.preventDefault()
+            document.getElementById('but').innerHTML = `<div class="spinner-border" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                        </div>`
+            var name = document.getElementById('name').value
+            var phone = document.getElementById('phone').value
+            var email = document.getElementById('email').value
+            var negotitaions = document.getElementById('select1').value
+            var signers = document.getElementById('select2').value
+            
+            fetch("https://api-notarize.herokuapp.com/customer/createPublicOrder",{
+                method:'POST',
+                body:JSON.stringify({
+                    name:name,
+                    email:email,
+                    phoneNumber:phone,
+                    noOfSigners:signers,
+                    noOfNotarizations:negotitaions
+                })
+            })
+            .then(function(response){
+                return response.json()
+            })
+            .then(function(data){
+                console.log(data)
+                if(data.status==true)
+                {
+                    document.getElementById('firstdiv').innerHTML=`<div>
+    <div><img src="assets/img/Untitled2.png" style="margin-top: 100px;margin-left: 50px;margin-right: 235px;" />
+        </div>
+    <div class="text-start d-flex float-start flex-column justify-content-center align-items-center align-content-center" style="background: var(--bs-white);height: 328px;width: 529px;margin-top: -12px;margin-right: 0px;margin-left: 33px;">
+        <span style="font-weight: bold;font-size: 25px;margin-left: 55px;padding: 0px;width: 102.359px;height: 46px;margin-top: -97px;">Congrats!   </span>
+        <span style="width: 460px;font-weight: bold;font-size: 24px;margin-left: 81px;">Your Online Notary has been Scheduled</span>
+        <span style="margin-left: 74px;font-size: 13px;margin-top: 22px;margin-bottom: 37px;">Our Team will soon Schedule Appointment for Notarisation</span>
+        <span style="margin-left: 116px;font-size: 13px;margin-top: -4px;">In Case of Emergency Notarisations, please reach out to us directly</span>
+        <span style="font-weight: bold;width: -46px;transform: translate(126px);">
+            <i class="fa fa-at" style="width: 29.7188px;min-width: 14px;font-size: 27px;margin-top: 15px;margin-left: -310px;"></i>
+            Support@support.com</span>
+            <span style="font-weight: bold;width: -46px;transform: translate(441px);margin-top: -45px;margin-left: -28px;">
+                <i class="fas fa-phone" style="width: 29.7188px;min-width: 14px;font-size: 27px;margin-top: 15px;margin-left: -310px;"></i>
+                +911231231231</span></div>
+</div>`
+                }
+            })
+        })
+    </script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Contact-Form-v2-Modal--Full-with-Google-Map.js"></script>
+</body>
+
+</html>
